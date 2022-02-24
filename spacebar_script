@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+echo "$(neofetch | grep Memory | awk '{print $2}')/8192MiB   " && echo $(system_profiler SPPowerDataType | grep Connected | awk '{print $2}' | sed 's/Yes/⚡️ /; s/No/   /') && echo " $(system_profiler SPPowerDataType | grep State |awk '{print $5}')%"

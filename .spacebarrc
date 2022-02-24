@@ -26,8 +26,7 @@ spacebar -m config clock                       on
 spacebar -m config clock_format                "%Y.%m.%d %H:%M"
 
 spacebar -m config clock_icon                  ⏰
-spacebar -m config power                       on
-spacebar -m config power_icon_strip 	       ⚡️
+spacebar -m config power                       off
 
 spacebar -m config dnd                         on
 #spacebar -m config space_icon_strip     I II III IV V VI VII VIII IX X

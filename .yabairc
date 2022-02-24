@@ -12,7 +12,7 @@ yabai -m config window_shadow                off
 yabai -m config window_opacity               off
 yabai -m config window_opacity_duration      0.0
 yabai -m config active_window_opacity        1.0
-yabai -m config normal_window_opacity        0.90
+yabai -m config normal_window_opacity        0.10
 yabai -m config window_border                off
 yabai -m config split_ratio                  0.50
 yabai -m config auto_balance                 off
@@ -23,11 +23,20 @@ yabai -m config mouse_drop_action            swap
 
 # General space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  0
-yabai -m config bottom_padding               0
-yabai -m config left_padding                 0
-yabai -m config right_padding                0
-yabai -m config window_gap                   0
+yabai -m config top_padding                  10
+yabai -m config bottom_padding               10
+yabai -m config left_padding                 10
+yabai -m config right_padding                10
+yabai -m config window_gap                   10
+
+# spacebar
+yabai -m config external_bar all:25:0
 
 # App specific rules
-yabai -m rule --add app="^zathura" layer=above manage=on
+#yabai -m rule --add app="^zathura$" manage=on --layout=stack
+yabai -m rule --add app="^Préférences Système$" layer=above manage=off 
+yabai -m rule --add app=photolibraryd manage=on zoom-fullscreen=on
+yabai -m rule --add app='^System Information$' manage=off layer=above 
+yabai -m rule --add app='^System Preferences$' manage=off layer=above
+yabai -m rule --add app="^Installation Manager" manage=off
+yabai -m rule --add title='^Preferences$' manage=off

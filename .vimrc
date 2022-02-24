@@ -15,7 +15,6 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'davidhalter/jedi-vim'
 call plug#end()
 
-" let g:mkdp_browser = 'safari'
 
 ""
 nnoremap <leader>ev :split $MYVIMRC<cr>
@@ -134,6 +133,7 @@ function! s:html_abbrevations()
 endfunction
 
 autocmd FileType markdown call s:md_tweaks()
+autocmd FileType tex call s:md_tweaks()
 
 function! s:md_tweaks()
 	"write in Zen Mode
@@ -149,9 +149,9 @@ function! s:md_tweaks()
 	iabbrev dsum \displaystyle\sum_{
 	iabbrev dprod \displaystyle\prod_{
 	iabbrev dint \displaystyle\int
-	iabbrev syst \begin{cases}<cr>\end{cases}<esc>2xO
-	iabbrev mmax \underset{}{\max}\text{ }<esc>l3x5ba
-	iabbrev mmin \underset{}{\min}\text{ }<esc>l3x5ba
+	iabbrev syst \begin{cases}\end{cases}<esc>2x4ba
+	iabbrev mmax \underset{}{\max}\text{ }<esc>l3x6ba
+	iabbrev mmin \underset{}{\min}\text{ }<esc>l3x6ba
 	iabbrev enss \left\{<esc>a
 	iabbrev comp \mathcal O(
 	iabbrev riar \rightarrow
@@ -163,6 +163,8 @@ function! s:md_tweaks()
 	iabbrev esp \mathbb E\left[<esc>a
 	iabbrev espp \mathbb E_{<esc>lli \left[<esc>3bli
 	iabbrev osim \overset\sim
+	iabbrev usim \underset\sim
+	iabbrev uusim \underset\approx
 	iabbrev msp \text{ }<esc>ls
 	iabbrev ssup \underset{}{\sup}\text{ }<esc>ldW14hi
 	iabbrev iinf \underset{}{\inf}\text{ }<esc>ldW14hi
@@ -175,6 +177,10 @@ function! s:md_tweaks()
 	iabbrev mat \begin{pmatrix}\end{pmatrix}<esc>2x3bhi
 	iabbrev vv \vee
 	iabbrev ww \wedge
+	iabbrev kker \text{Ker }<esc>xa
+	iabbrev iim \text{Im }<esc>xa
+	iabbrev rrg \text{rg }<esc>xa
+	iabbrev ddim \text{dim }<esc>xa
 
 	" text abbreviations
 	iabbrev iff if and only if
@@ -183,6 +189,7 @@ function! s:md_tweaks()
 	" autocorrect
 	iabbrev inn in
 	iabbrev innfty infty
+	iabbrev ÷ \
 
 	" just in case the word inn is actually needed
 	iabbrev _inn inn
@@ -213,3 +220,7 @@ endfunction
 set wildmenu
 set wildmode=list:longest
 set wildignore=*.jpg,*.png,*.gif,*.pyc,*.flv,*.img,*.o,*.out
+
+map I :! pdflatex %<CR><CR>
+map S :! zathura $(echo % \| sed 's/.tex$/.pdf/; s/.md/.pdf/') & disown && brew services restart yabai<CR><CR>
+map U :! pandoc -o $(echo % \| sed 's/.md$/.pdf/') %<CR><CR>

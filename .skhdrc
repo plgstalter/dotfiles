@@ -26,6 +26,10 @@ alt + cmd - l : yabai -m window --swap east
 # Rotating tree
 alt - r : yabai -m space --rotate 90
 
+# Stacks
+
+alt - s : yabai -m window --stack
+
 # Resize windows
 ctrl + shift - h : \
     yabai -m window --resize left:-50:0 ; \
@@ -79,3 +83,9 @@ cmd + alt - n : yabai -m space --create && \
 
 # destroy desktop
 cmd + alt - w : yabai -m space --destroy
+
+# open app
+ctrl + fn - t : open -na terminal
+ctrl + fn - a : open -na alacritty
+ctrl + fn - b : open -na brave
+ctrl + fn - m : open -a thunderbird

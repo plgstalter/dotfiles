@@ -139,6 +139,11 @@ function! s:md_tweaks()
 	"write in Zen Mode
 	call ZenModeToggle()
 
+	" autocompile, autopreview
+	map F :! pdflatex %<CR><CR>
+	map S :! zathura $(echo % \| sed 's/.tex$/.pdf/; s/.md/.pdf/') & disown && brew services restart yabai<CR><CR>
+	map U :! pandoc -o $(echo % \| sed 's/.md$/.pdf/') %<CR><CR>
+
 	" math abbreviations
 	iabbrev \R \mathbb R
 	iabbrev \N \mathbb N
@@ -221,6 +226,6 @@ set wildmenu
 set wildmode=list:longest
 set wildignore=*.jpg,*.png,*.gif,*.pyc,*.flv,*.img,*.o,*.out
 
-map I :! pdflatex %<CR><CR>
-map S :! zathura $(echo % \| sed 's/.tex$/.pdf/; s/.md/.pdf/') & disown && brew services restart yabai<CR><CR>
-map U :! pandoc -o $(echo % \| sed 's/.md$/.pdf/') %<CR><CR>
+" spelling check
+map <leader>t :set spell<CR>
+map <leader>z :set spell<CR> :set spelllang=fr<CR>

@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+y=$(system_profiler SPPowerDataType | grep -E "Connected|State")
+# getting memory data from neofetch source code
+hw_pagesize="$(sysctl -n hw.pagesize)"
+mem_total="$(($(sysctl -n hw.memsize) / 1024 / 1024))"
+pages_app="$(($(sysctl -n vm.page_pageable_internal_count) - $(sysctl -n vm.page_purgeable_count)))"
+pages_wired="$(vm_stat | awk '/ wired/ { print $4 }')"
+pages_compressed="$(vm_stat | awk '/ occupied/ { printf $5 }')"
+pages_compressed="${pages_compressed:-0}"
+used_memory=$(((${pages_app} + ${pages_wired//.} + ${pages_compressed//.}) * hw_pagesize / 1024 / 1024))MiB/${mem_total}Mib
+
+charging_state=$(echo "${y##* }" | sed 's/Yes/⚡️/; s/No/🔋/')
+charging_percentage=$(echo "${y:31:3 }%")
+
+echo "💾 $used_memory $charging_state $charging_percentage"

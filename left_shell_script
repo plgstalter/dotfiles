@@ -3,6 +3,7 @@
 wireless_answer=$(/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -I | grep AirPort)
 wireless_status=$( [ ${#wireless_answer} -gt 0 ] && echo "Wifi Off")
 export wireless_status="$wireless_status $( [ ${#wireless_answer} -lt 1 ] && echo "Wifi On")"
+#cpu_status=$(ps -A -o %cpu | awk '{ cpu += $1} END {print cpu}')
+cpu_status=$(neofetch cpu_usage | sed 's/cpu_usage: /CPU: /; s/\%.*$/\%/')
 
-
-echo "CPU : $(ps -A -o %cpu | awk '{ cpu += $1} END {print cpu}')% | $wireless_status"
+echo "${cpu_status} | $wireless_status"

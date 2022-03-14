@@ -80,6 +80,10 @@ endfunction
 :autocmd FileType html nnoremap <buffer> <localleader>c I<--<esc>A--><esc>
 :autocmd FileType cpp nnoremap <buffer> <localleader>c I//<esc>
 :autocmd FileType cpp nnoremap <buffer> <localleader>k 0xx$
+:autocmd FileType C nnoremap <buffer> <localleader>c I//<esc>
+
+" multiline commenting, filetype specific
+" :let @m="\<Esc>\<Localleader>c j\<Esc>" " not working yet
 
 
 " Syntax Highlighting
@@ -141,7 +145,7 @@ function! s:md_tweaks()
 
 	" autocompile, autopreview
 	map F :! pdflatex %<CR><CR>
-	map S :! zathura $(echo % \| sed 's/.tex$/.pdf/; s/.md/.pdf/') & disown && brew services restart yabai<CR><CR>
+	map S :! zathura $(echo % \| sed 's/.tex$/.pdf/; s/.md/.pdf/') & disown <CR><CR>
 	map U :! pandoc -o $(echo % \| sed 's/.md$/.pdf/') %<CR><CR>
 
 	" math abbreviations
@@ -154,6 +158,8 @@ function! s:md_tweaks()
 	iabbrev dsum \displaystyle\sum_{
 	iabbrev dprod \displaystyle\prod_{
 	iabbrev dint \displaystyle\int
+	iabbrev dcup \displaystyle\bigcup_{
+	iabbrev dcap \displaystyle\bigcap_{
 	iabbrev syst \begin{cases}\end{cases}<esc>2x4ba
 	iabbrev mmax \underset{}{\max}\text{ }<esc>l3x6ba
 	iabbrev mmin \underset{}{\min}\text{ }<esc>l3x6ba
@@ -180,6 +186,7 @@ function! s:md_tweaks()
 	iabbrev ox \otimes
 	iabbrev floor \lfloor\rfloor<esc>6hi
 	iabbrev mat \begin{pmatrix}\end{pmatrix}<esc>2x3bhi
+	iabbrev mmat \begin{pmatrix}\end{pmatrix}<esc>2x4ba
 	iabbrev vv \vee
 	iabbrev ww \wedge
 	iabbrev kker \text{Ker }<esc>xa
@@ -228,4 +235,4 @@ set wildignore=*.jpg,*.png,*.gif,*.pyc,*.flv,*.img,*.o,*.out
 
 " spelling check
 map <leader>t :set spell<CR>
-map <leader>z :set spell<CR> :set spelllang=fr<CR>
+map <leader>f :set spell<CR> :set spelllang=fr<CR>

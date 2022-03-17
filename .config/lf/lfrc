@@ -1,0 +1,36 @@
+set shellopts '-eu'
+set ifs "\n"
+set scrolloff 10
+# set icons
+set period 1
+set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml:*.o"
+set cleaner '~/.config/lf/cleaner'
+set previewer '~/.config/lf/scope'
+
+cmd open ${{
+    case $(file --mime-type $f -b) in
+      (application/pdf|application/vnd*|application/epub*) nohup zathura $fx & disown 2>&1 ;;
+      (application/csv) vd $fx ;;
+      (application/msword\
+        |application/vnd.openxmlformats-officedocument.*\
+        |application/vnd.oasis.opendocument.text\
+        |application/vnd.ms-excel\
+        |text/rtf) open -a LibreOffice.app ;;
+      (text/*) $EDITOR $fx;;
+      (image/x-xcf) nohup gimp $f >/dev/null 2>&1 ;;
+      (image/svg+xml) display -- $f ;;
+      (image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" | sxiv -ai 2>/dev/null | lf-select ;;
+      (audio/*) mpv --audio-display=no $f >/dev/null ;;
+      (video/*) nohup mpv $f -quiet >/dev/null 2>&1 ;;
+      (application/x-bittorrent) open -a Transmission.app ;;
+      (application/zlib) open ;;
+      (*)
+        case ${f:e} in
+          (dmg) hdiutil attach "$fx" ;;
+          (*) $EDITOR $fx ;;
+        esac
+        ;;
+    esac
+
+    # *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>/dev/null & done;;
+}}
